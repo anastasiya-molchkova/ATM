@@ -57,7 +57,7 @@
             resources.ApplyResources(this.button_show_ATM_balance_form, "button_show_ATM_balance_form");
             this.button_show_ATM_balance_form.Name = "button_show_ATM_balance_form";
             this.button_show_ATM_balance_form.UseVisualStyleBackColor = false;
-            this.button_show_ATM_balance_form.Click += new System.EventHandler(this.button3_Click);
+            this.button_show_ATM_balance_form.Click += new System.EventHandler(this.button_show_ATM_balance_form_Click);
             // 
             // button_main_menu_close
             // 
@@ -65,7 +65,7 @@
             resources.ApplyResources(this.button_main_menu_close, "button_main_menu_close");
             this.button_main_menu_close.Name = "button_main_menu_close";
             this.button_main_menu_close.UseVisualStyleBackColor = false;
-            this.button_main_menu_close.Click += new System.EventHandler(this.button4_Click);
+            this.button_main_menu_close.Click += new System.EventHandler(this.button_main_menu_close_Click);
             // 
             // Main_menu_form
             // 

@@ -83,7 +83,19 @@ namespace ATM
             change_form_to_enter_summ(true);
         }
 
-        // в этом векторе будем хранить номиналы купюр, которыми производим выдачу, они могут повторяться:
+        private void button_by_large_value_Click(object sender, EventArgs e)
+        {
+            if (check_and_withdrawal(true) == false)
+                label_no_result.Visible = true;
+        }
+
+        private void button_by_small_value_Click(object sender, EventArgs e)
+        {
+            if (check_and_withdrawal(false) == false)
+                label_no_result.Visible = true;
+        }
+
+        // в этом векторе будем хранить номиналы купюр, которыми производим выдачу, они могут повторяться, т.к. тут нет количеств:
         private List<uint> try_to_withdraw = new List<uint> { };
 
         // создаём массив купюр, в который скопируем запасы банкомата для симуляции попытки выдачи средств:
@@ -113,13 +125,17 @@ namespace ATM
             return banknote_value;
         }
 
-        // функция проверяет, можем ли мы выдать заданную сумму и возвращает массив купюр (достоинство-количество), которыми можно выдать
+        // функция проверяет, можем ли мы выдать заданную сумму и заполняет массив купюр (достоинство-количество),
+        // которыми можно выдать. Возвращает истину, если всё получилось и ложь - если нет.
         private bool check_and_withdrawal(bool by_large_values)
         {
             label_no_result.Visible = false;
-            uint users_wish = 0;
+            uint users_wish = 0; // в этой переменной будем хранить сумму, которую хочет получить пользователь
+
+            // СНАЧАЛА ПРОВЕРЯЕМ, НОРМАЛЬНУЮ ЛИ СУММУ ХОЧЕТ ПОЛЬЗОВАТЕЛЬ
             try
             {
+                // пытаемся получить сумму из окошка для неё, если там не число - ловим ошибку
                 users_wish = Convert.ToUInt32(textBox_for_summ.Text);
             }
             catch
@@ -127,18 +143,18 @@ namespace ATM
                 MessageBox.Show("Запрашиваемая сумма не корректна!");
             }
             if (users_wish == 0)
+            // 0 - нормальное число, но не в данном случае
             {
-                label_no_result.Text = "Введите ненулевую сумму";
+                label_no_result.Text = "Введите ненулевую и недробную сумму";
                 return false;
             }
-            // если пользователь хочет больше, чем есть - сразу нет:
+            // если пользователь хочет больше, чем есть - тоже сразу нет:
             uint ATM_balanсe = ATM.how_much_money();
             if (users_wish > ATM_balanсe)
             {
                 label_no_result.Text = "В банкомате нет столько денег!\nПроверьте баланс и попробуйте ввести сумму меньше.";
                 return false;
             }
-
             // если пользователь хочет более мелкие деньги, чем есть, то тоже нет:
             if (users_wish % Banknote.get_banknote_value_by_text(min_available_value()) != 0)
             {
@@ -161,7 +177,7 @@ namespace ATM
                     Banknote next_banknote = new Banknote(Banknote.get_banknote_value_by_text(value), ATM.how_many_banknotes_of(value));
                     banknotes_stock_for_check.Add(next_banknote);
                 }
-            else // нужна выдача мелкими купюрами, тут код подлиннее
+            else // нужна выдача мелкими купюрами, тут код подлиннее, чтобы сразу понять, какими купюрами можем обойтись
             {
                 // изначально полагаем максимальную мелкую купюру равной 200р
                 Banknote_values max_small_value = Banknote_values.two_hundred_rubles;
@@ -180,7 +196,7 @@ namespace ATM
                             max_small_value++;  // мы не будем проверять здесь, что значение выйдет за предел диапазона, т.к. уже проверили, что всех денег банкомата для суммы хватит
                     }
                 }
-                max_value = max_small_value;
+                max_value = max_small_value;  // ограничиваем максимальный номинал максимальной мелкой купюрой, которой хватит для выдачи суммы мелкими купюрами
             }
 
             // очистим массив снимаемых купюр, будем пополнять его по мере набора желаемой суммы
@@ -196,16 +212,16 @@ namespace ATM
                 Banknote_values max_enum_value = max_available_value_less_than(users_wish, max_value);
                 var max_available_banknote_value = Banknote.get_banknote_value_by_text(max_enum_value);
 
-                // максимально доступный номинал по факту может оказаться и не доступным:
+                // максимально "доступный" номинал по факту может оказаться и не доступным:
                 if (banknotes_stock_for_check[Convert.ToInt32(max_enum_value)].get_banknote_quantity() == 0)
                 {
                     // тогда мы не можем эту купюру использовать и набор суммы завершён
                     label_no_result.Text = "Не удаётся набрать запрашиваемую сумму, не хватает каких-то купюр.\n";
                     label_no_result.Text += "Попробуйте ввести сумму ";
                     label_no_result.Text += Convert.ToString(total_summ_to_withdraw);
-                    // очистим массив снимаемых купюр
+                    // очистим уже частично заполненный массив снимаемых купюр:
                     try_to_withdraw.Clear();
-                    return false;
+                    return false;           // проверка окончена
                 }
                 // ИНАЧЕ продолжаем, добавляем купюру в список для снятия:
                 banknotes_stock_for_check[Convert.ToInt32(max_enum_value)].substract_banknote();
@@ -213,46 +229,35 @@ namespace ATM
                 total_summ_to_withdraw += max_available_banknote_value;
                 users_wish -= max_available_banknote_value;
             }
+            // дошли до сюда, значит набрали всю сумму
 
             // скрываем кнопки и поле для суммы, готовим текст о результате
             textBox_for_summ.Visible = false;
             button_by_small_value.Visible = false;
             button_by_large_value.Visible = false;
             
-            // снимаем все подобранные банкноты по очереди, печатаем их неповторяющиеся номиналы
-            var used_banknote = try_to_withdraw[0];
-            var number_of_used_banknotes = 0;
+            // снимаем все подобранные банкноты по очереди, и печатаем их неповторяющиеся номиналы
+            var used_banknote = try_to_withdraw[0];   // это для печати, сохраняем номинал первой банкноты на выдачу
+            var number_of_used_banknotes = 0;         // это тоже для печати
             string info_about_banknotes = "\nиспользованы купюры:\n" + used_banknote;
             foreach (var value in try_to_withdraw)
             {
                 ATM.withdraw_banknote(value);
-                if (value != used_banknote)
+                if (value != used_banknote)           // показываем количество для выданной купюры
                 {
                     info_about_banknotes += " x " + number_of_used_banknotes + '\n' + value;
-                    used_banknote = value;
+                    used_banknote = value;            // начинаем рассматривать следующую
                     number_of_used_banknotes = 0;
                 }
                 number_of_used_banknotes++;
             }
-            info_about_banknotes += " x " + number_of_used_banknotes;
+            info_about_banknotes += " x " + number_of_used_banknotes;   // добавляем информацию о количестве последней выданной купюры
 
             label_for_positive_result.Text = "ВЫДАНА СУММА " + total_summ_to_withdraw;
             label_for_positive_result.Text += info_about_banknotes;
             label_for_positive_result.Visible = true;
 
             return true;
-        }
-
-        private void button_by_large_value_Click(object sender, EventArgs e)
-        {
-            if (check_and_withdrawal(true) == false)
-                label_no_result.Visible = true;
-        }
-
-        private void button_by_small_value_Click(object sender, EventArgs e)
-        {
-            if (check_and_withdrawal(false) == false)
-                label_no_result.Visible = true;  
         }
     }
 }

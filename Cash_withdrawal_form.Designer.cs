@@ -172,7 +172,7 @@
             this.textBox_for_summ.Name = "textBox_for_summ";
             this.textBox_for_summ.Size = new System.Drawing.Size(208, 31);
             this.textBox_for_summ.TabIndex = 10;
-            this.textBox_for_summ.Text = "0.00";
+            this.textBox_for_summ.Text = "0";
             this.textBox_for_summ.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.textBox_for_summ.Visible = false;
             // 

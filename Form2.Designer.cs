@@ -66,40 +66,41 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.ForeColor = System.Drawing.SystemColors.Info;
             this.label1.Location = new System.Drawing.Point(1, 22);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(471, 31);
+            this.label1.Size = new System.Drawing.Size(355, 31);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Текущий баланс банкомата (рубли):";
+            this.label1.Text = "Баланс банкомата (рубли):";
             // 
             // label_ATM_balance
             // 
             this.label_ATM_balance.AutoSize = true;
             this.label_ATM_balance.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label_ATM_balance.ForeColor = System.Drawing.SystemColors.Info;
-            this.label_ATM_balance.Location = new System.Drawing.Point(470, 22);
+            this.label_ATM_balance.Location = new System.Drawing.Point(370, 22);
             this.label_ATM_balance.Name = "label_ATM_balance";
             this.label_ATM_balance.Size = new System.Drawing.Size(67, 31);
             this.label_ATM_balance.TabIndex = 3;
             this.label_ATM_balance.Text = "0.00";
-            this.label_ATM_balance.Click += new System.EventHandler(this.label2_Click);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label3.ForeColor = System.Drawing.SystemColors.Info;
             this.label3.Location = new System.Drawing.Point(1, 53);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(254, 31);
+            this.label3.Size = new System.Drawing.Size(345, 31);
             this.label3.TabIndex = 4;
-            this.label3.Text = "Количество купюр:";
+            this.label3.Text = "Общее количество купюр:";
             // 
             // label_bankonotes_number
             // 
             this.label_bankonotes_number.AutoSize = true;
             this.label_bankonotes_number.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label_bankonotes_number.ForeColor = System.Drawing.SystemColors.Info;
-            this.label_bankonotes_number.Location = new System.Drawing.Point(470, 53);
+            this.label_bankonotes_number.Location = new System.Drawing.Point(370, 53);
             this.label_bankonotes_number.Name = "label_bankonotes_number";
             this.label_bankonotes_number.Size = new System.Drawing.Size(59, 31);
             this.label_bankonotes_number.TabIndex = 5;
@@ -110,7 +111,7 @@
             this.label_max_banknotes.AutoSize = true;
             this.label_max_banknotes.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label_max_banknotes.ForeColor = System.Drawing.SystemColors.Info;
-            this.label_max_banknotes.Location = new System.Drawing.Point(535, 59);
+            this.label_max_banknotes.Location = new System.Drawing.Point(497, 59);
             this.label_max_banknotes.Name = "label_max_banknotes";
             this.label_max_banknotes.Size = new System.Drawing.Size(77, 25);
             this.label_max_banknotes.TabIndex = 6;
@@ -125,6 +126,7 @@
             this.label_info_by_banknotes_values.Size = new System.Drawing.Size(419, 141);
             this.label_info_by_banknotes_values.TabIndex = 8;
             this.label_info_by_banknotes_values.Text = "купюры и количества";
+            this.label_info_by_banknotes_values.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // Show_balance_form
             // 

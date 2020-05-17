@@ -18,7 +18,7 @@ namespace ATM
 
             // считаем баланс банкомата в деньгах, превращаем в строку, отображаем:
             uint ATM_balanсe = ATM.how_much_money();
-            string ATM_balance_with_space = Convert.ToString(ATM_balanсe / 1000);
+            string ATM_balance_with_space = (Convert.ToString(ATM_balanсe / 1000)=="0")?"": Convert.ToString(ATM_balanсe / 1000);
             ATM_balance_with_space += " ";
             if (ATM_balanсe % 1000 < 10) 
                 ATM_balance_with_space += "0";
@@ -47,11 +47,5 @@ namespace ATM
         {
             Close();
         }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-  
     }
 }

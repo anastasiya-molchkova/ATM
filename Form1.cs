@@ -18,13 +18,11 @@ namespace ATM
             // при запуске главного меню в первый раз, заполняем банкомат случайным количеством денег в рамках ограничений на количество купюр
             ATM.create_random_ATM_stock();
         }
-        // я поменяла Name этой кнопки на button_main_menu_close, но здесь она по-прежнему безымянная:
-        private void button4_Click(object sender, EventArgs e)
+        private void button_main_menu_close_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
-        // я поменяла Name этой кнопки на button_show_ATM_balance_form, но здесь она по-прежнему безымянная:
-        private void button3_Click(object sender, EventArgs e)
+        private void button_show_ATM_balance_form_Click(object sender, EventArgs e)
         {
             Hide();
             Show_balance_form balance_Form = new Show_balance_form();

@@ -2,7 +2,7 @@
 {
     partial class Cash_replenishment
     {
-        /// <summary>
+        /// <summary>load
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
@@ -192,7 +192,7 @@
             this.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Внесение средств";
-            this.Load += new System.EventHandler(this.Cash_replenishment_Load);
+            //this.Load += new System.EventHandler(this.Cash_replenishment_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

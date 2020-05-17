@@ -23,10 +23,6 @@ namespace ATM
             this.value = value;
             this.number = quantity;
         }
-        public void set_number(uint quantity)           // устанавливаем количество
-        {
-            this.number = quantity;
-        }
         public void add_banknotes(uint quantity_to_add) // добавляем заданное количество
         {
             this.number += quantity_to_add;
